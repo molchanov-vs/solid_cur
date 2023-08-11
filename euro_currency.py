@@ -56,8 +56,10 @@ def main():
     soup = BeautifulSoup(html, "html.parser")
     currency = soup.find_all('tbody', id='currency_rate_solid')
 
-    usd = float(currency[0].text[8:13].replace(',','.'))
-    eur = float(currency[0].text[-5:].replace(',','.'))
+    _, dol_2, dol_3, _, eur_2, eur_3 = currency[0].text.split(',')[:6]
+
+    usd = float('.'.join([dol_2[2:], dol_3[:2]]))
+    eur = float('.'.join([eur_2[2:], eur_3[:2]]))
 
     # telegram_bot_sendtext('check')
 
